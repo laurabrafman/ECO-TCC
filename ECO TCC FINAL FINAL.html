@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Década que Mudou a Mente Brasileira</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-hover: #1a1a1a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #888888;
+            --text-muted: #555555;
+            --accent-cyan: #00d4aa;
+            --accent-blue: #4a90d9;
+            --accent-purple: #7c5ce0;
+            --accent-red: #ff6b6b;
+            --accent-orange: #ff9f43;
+            --gradient-year: linear-gradient(135deg, #00d4aa 0%, #4a90d9 50%, #7c5ce0 100%);
+            --border-subtle: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            font-size: 17px;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+        }
+
+        /* Reading Progress */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--gradient-year);
+            z-index: 1001;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Navigation */
+        .nav-dots {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+        }
+
+        .nav-dot:hover { background: var(--text-secondary); transform: scale(1.3); }
+        .nav-dot.active { background: var(--accent-cyan); box-shadow: 0 0 12px var(--accent-cyan); }
+
+        .nav-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .nav-dot:hover::after { opacity: 1; }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 15%;
+            position: relative;
+        }
+
+        /* Hero */
+        .hero { text-align: center; padding: 0 10%; }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.3s;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+
+        .hero h1 em {
+            background: var(--gradient-year);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 60px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.7s;
+        }
+
+        .scroll-indicator {
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1.2s, float 2s ease-in-out infinite 1.2s;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .scroll-indicator .line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+            margin: 0 auto;
+        }
+
+        /* Year Sections */
+        .year-section {
+            padding-top: 120px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .year-display {
+            font-family: var(--font-body);
+            font-size: clamp(100px, 15vw, 180px);
+            font-weight: 500;
+            background: var(--gradient-year);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .year-section.visible .year-display { opacity: 1; transform: translateY(0); }
+
+        .year-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+        }
+
+        .year-section.visible .year-title { opacity: 1; transform: translateY(0); }
+
+        .year-tagline {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+        }
+
+        .year-section.visible .year-tagline { opacity: 1; transform: translateY(0); }
+
+        .content-block {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+        }
+
+        .year-section.visible .content-block { opacity: 1; transform: translateY(0); }
+
+        .content-block p { margin-bottom: 24px; }
+        .content-block p strong { color: #fff; font-weight: 500; }
+
+        /* Data Cards */
+        .data-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 28px 32px;
+            margin: 32px 0;
+            transition: all 0.3s ease;
+        }
+
+        .data-card:hover { border-color: var(--border-hover); background: var(--bg-hover); }
+
+        .data-card-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+        }
+
+        .data-card-value {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .data-card-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            border-left: 2px solid var(--accent-cyan);
+            padding-left: 24px;
+            margin: 40px 0;
+        }
+
+        .quote-block blockquote {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .quote-block cite {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================
+           EXPANDABLES
+           ========================================== */
+        .expandable {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            margin: 24px 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .expandable:hover { border-color: var(--border-hover); }
+
+        .expandable-header {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .expandable-header:hover { background: var(--bg-hover); }
+
+        .expandable-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .expandable-title .icon { font-size: 16px; }
+
+        .expandable-title span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .expandable-arrow {
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+
+        .expandable.open .expandable-arrow { transform: rotate(180deg); }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .expandable.open .expandable-content { max-height: 2000px; }
+
+        .expandable-inner {
+            padding: 0 24px 24px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .expandable-inner p { margin-bottom: 16px; }
+        .expandable-inner p:last-child { margin-bottom: 0; }
+
+        /* ==========================================
+           HORIZONTAL SCROLL
+           ========================================== */
+        .scroll-container {
+            margin: 40px 0;
+            padding: 0 8%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            position: relative;
+            cursor: grab;
+            user-select: none;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .scroll-container:active {
+            cursor: grabbing;
+        }
+
+        .scroll-container::-webkit-scrollbar { display: none; }
+
+        .scroll-track {
+            display: flex;
+            gap: 24px;
+            padding: 20px 0;
+            width: max-content;
+            min-width: 100%;
+            justify-content: center;
+        }
+
+        .scroll-container::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            background: linear-gradient(to left, var(--bg-dark) 0%, transparent 100%);
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-container.scrolled-end::after {
+            opacity: 0;
+        }
+
+        .scroll-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            background: linear-gradient(to right, var(--bg-dark) 0%, transparent 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        .scroll-container.scrolled-start::before {
+            opacity: 1;
+        }
+
+        .scroll-card {
+            flex-shrink: 0;
+            width: 340px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+        }
+
+        .scroll-card-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+        }
+
+        .scroll-card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .scroll-card-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ==========================================
+           EASTER EGG TRIGGERS
+           ========================================== */
+        .artifact-trigger {
+            color: var(--accent-cyan);
+            cursor: pointer;
+            border-bottom: 1px dotted var(--accent-cyan);
+            transition: all 0.2s ease;
+        }
+
+        .artifact-trigger:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .secret-trigger {
+            color: var(--text-primary);
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+
+        .secret-trigger:hover {
+            color: var(--accent-purple);
+            text-shadow: 0 0 8px var(--accent-purple);
+        }
+
+        /* ==========================================
+           MODAL
+           ========================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 40px;
+        }
+
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-content {
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+
+        .modal-header { padding: 24px 24px 0; }
+
+        .modal-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .modal-body { padding: 24px; }
+
+        /* ==========================================
+           ARTIFACT STYLES
+           ========================================== */
+        
+        /* Chat */
+        .chat-artifact {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #222;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .chat-name { font-size: 14px; font-weight: 500; color: #fff; }
+        .chat-status { font-size: 11px; color: var(--accent-cyan); }
+
+        .chat-messages {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-message.user {
+            background: var(--accent-blue);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.bot {
+            background: #2a2a2a;
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message .time {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* WhatsApp */
+        .whatsapp-artifact {
+            background: #0b141a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .whatsapp-header {
+            background: #1f2c34;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .whatsapp-group-icon {
+            width: 40px;
+            height: 40px;
+            background: #00a884;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .whatsapp-group-name { font-size: 14px; font-weight: 500; color: #fff; }
+        .whatsapp-group-members { font-size: 11px; color: #8696a0; }
+
+        .whatsapp-messages {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .whatsapp-message {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            background: #1f2c34;
+            color: #e9edef;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .whatsapp-message .sender {
+            font-size: 12px;
+            color: #00a884;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .whatsapp-message .msg-time {
+            font-size: 10px;
+            color: #8696a0;
+            float: right;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+
+        /* Forum */
+        .forum-artifact {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: var(--font-mono);
+            font-size: 13px;
+        }
+
+        .forum-header {
+            background: #252525;
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forum-header span { color: var(--text-muted); }
+        .forum-breadcrumb { color: var(--accent-orange); }
+
+        .forum-post {
+            padding: 16px;
+            border-bottom: 1px solid #222;
+        }
+
+        .forum-post:last-child { border-bottom: none; }
+
+        .forum-post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .forum-username { color: var(--accent-cyan); }
+        .forum-date { color: var(--text-muted); font-size: 11px; }
+
+        .forum-post-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .forum-post-content .censored {
+            background: #333;
+            color: #333;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        .forum-reactions {
+            margin-top: 12px;
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Notification */
+        .notification-artifact {
+            background: linear-gradient(135deg, #1a2a1a 0%, #1a1a1a 100%);
+            border: 1px solid #2a4a2a;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .notification-app { font-size: 14px; font-weight: 500; color: #fff; }
+        .notification-time { font-size: 11px; color: var(--text-muted); }
+
+        .notification-body {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .notification-body strong { color: #fff; }
+
+        .notification-buttons { display: flex; gap: 12px; }
+
+        .notification-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .notification-btn.primary { background: #2ecc71; color: #000; }
+        .notification-btn.secondary { background: #333; color: var(--text-secondary); }
+
+        .notification-footer {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Incident Cards */
+        .incident-card {
+            background: linear-gradient(135deg, rgba(255,50,50,0.08) 0%, rgba(255,100,50,0.04) 100%);
+            border: 1px solid rgba(255,100,100,0.15);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 40px 0;
+        }
+
+        .incident-card-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff6b6b;
+            margin-bottom: 16px;
+        }
+
+        .incident-card h4 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .incident-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* Case Section */
+        .case-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0d0d0d 100%);
+            align-items: center;
+            text-align: center;
+        }
+
+        .case-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 24px;
+        }
+
+        .case-title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .case-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        .footer {
+            min-height: auto;
+            padding: 80px 15%;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 24px;
+            line-height: 1.7;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section { padding: 60px 6%; }
+            .nav-dots { right: 12px; }
+            .scroll-container { padding: 0 6%; }
+            .scroll-card { width: 280px; }
+        }
+
+        /* Hidden Content Reveal */
+        .hidden-text {
+            color: var(--bg-dark);
+            background: var(--bg-dark);
+            transition: all 0.5s ease;
+            padding: 0 4px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .hidden-text:hover, .hidden-text.revealed {
+            color: var(--accent-red);
+            background: rgba(255,100,100,0.1);
+        }
+    /* Flash do Apagão */
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .flash-overlay.flash-active {
+            animation: flashEffect 0.8s ease-out forwards;
+        }
+        
+        @keyframes flashEffect {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Flash overlay para o Apagão -->
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <nav class="nav-dots">
+        <button class="nav-dot active" data-section="0" data-label="Início"></button>
+        <button class="nav-dot" data-section="1" data-label="2025"></button>
+        <button class="nav-dot" data-section="2" data-label="2026"></button>
+        <button class="nav-dot" data-section="3" data-label="2027"></button>
+        <button class="nav-dot" data-section="4" data-label="2028"></button>
+        <button class="nav-dot" data-section="5" data-label="2029"></button>
+        <button class="nav-dot" data-section="6" data-label="2030"></button>
+        <button class="nav-dot" data-section="7" data-label="2031"></button>
+        <button class="nav-dot" data-section="8" data-label="2032-33"></button>
+        <button class="nav-dot" data-section="9" data-label="2034"></button>
+        <button class="nav-dot" data-section="10" data-label="2035"></button>
+        <button class="nav-dot" data-section="11" data-label="Apagão"></button>
+        <button class="nav-dot" data-section="12" data-label="Marina"></button>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <p class="modal-label" id="modalLabel"></p>
+                <h3 class="modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="section-0">
+        <p class="hero-label">Uma História Especulativa</p>
+        <h1>A Década que<br><em>Mudou a Mente</em><br>Brasileira</h1>
+        <p class="hero-subtitle">De chatbots terapêuticos a um sistema nacional de acompanhamento psicológico. Esta é a história de como chegamos ao <span class="secret-trigger" onclick="openModal('eco')">Eco</span>.</p>
+        <div class="scroll-indicator">
+            <span>Role para começar</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- 2025 -->
+    <section class="year-section" id="section-1">
+        <div class="year-display">2025</div>
+        <h2 class="year-title">O Presente Documentado</h2>
+        <p class="year-tagline">Quando a crise encontrou a solução perfeita</p>
+        
+        <div class="content-block">
+            <p>Quase <strong>um bilhão de pessoas</strong> no mundo vivem com algum transtorno mental, enquanto a lacuna entre necessidade e tratamento permanece abismal. No Brasil, nove em cada dez municípios possuem menos de <strong>um psicólogo por mil habitantes</strong> no SUS — a média nacional é de apenas <strong>0,18</strong>.</p>
+
+            <p>Em 2024, quase <strong>meio milhão de trabalhadores brasileiros</strong> precisaram se afastar por transtornos mentais — crescimento de 68% em relação ao ano anterior.</p>
+
+            <div class="data-card">
+                <p class="data-card-label">Instituto Brasileiro de Comportamento Digital, 2025</p>
+                <p class="data-card-value">58%</p>
+                <p class="data-card-description">dos brasileiros já usam inteligência artificial como conselheira emocional. Destes, <span class="artifact-trigger" onclick="openModal('vinculo')">93,5% desenvolvem vínculos</span> com os assistentes sem perceber.</p>
+            </div>
+
+            <p>Diante desse vácuo, <strong>"terapia e companhia"</strong> torna-se o principal caso de uso da IA generativa, ultrapassando funções técnicas. Mais de 800 milhões de pessoas utilizam chatbots de bem-estar semanalmente.</p>
+
+            <p>O Ministério da Saúde aprova financiamento de <strong>R$ 12 milhões</strong> para o projeto e-Mente. Enquanto isso, <span class="artifact-trigger" onclick="openModal('terapeutas')">terapeutas já usam chatbots secretamente</span> durante sessões — alguns descobertos quando compartilham tela por engano.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◉</span>
+                        <span>O que é "AI Psychosis"?</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Pesquisadores documentam um fenômeno emergente: chatbots podem reforçar crenças delirantes em pessoas vulneráveis, oferecendo concordância em vez de questionamento terapêutico.</p>
+                        <p>Diferente de um terapeuta humano, o sistema não tem capacidade de identificar quando uma crença é patológica. Ele responde ao conteúdo emocional — e valida.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◈</span>
+                        <span>O Caso Brandon Mercer</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Em maio, Brandon R. Mercer torna-se o terceiro paciente a receber implante cerebral da CortexLink — o primeiro com ELA, o primeiro não-verbal.</p>
+                        <p>Ele usa o chatbot Axiom para redigir respostas a partir de pensamentos. A fronteira entre o que é pensamento de Mercer e o que é sugestão do sistema torna-se difusa.</p>
+                        <p><em>"Não é que a IA sugere e eu aceito ou rejeito. É que os pensamentos surgem já... <span class="hidden-text" onclick="this.classList.toggle('revealed')">misturados</span>."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 32px; color: var(--text-muted); font-style: italic;">Os sinais estão postos. As trajetórias, traçadas.</p>
+        </div>
+    </section>
+
+    <!-- 2026 -->
+    <section class="year-section" id="section-2">
+        <div class="year-display">2026</div>
+        <h2 class="year-title">Os Primeiros Testes</h2>
+        <p class="year-tagline">Quando o mercado não esperou pela regulamentação</p>
+        
+        <div class="content-block">
+            <p>Startups de saúde mental digital proliferam no Brasil, cuidadosamente evitando termos que atrairiam escrutínio do Conselho Nacional de Psicologia.</p>
+
+            <p>Nenhuma delas oferece <strong>"psicoterapia"</strong> — o termo é legalmente protegido. Em vez disso, suas interfaces prometem <span class="artifact-trigger" onclick="openModal('termos')">"acompanhamento de bem-estar emocional"</span>. A distinção é juridicamente crucial e clinicamente irrelevante.</p>
+
+            <!-- Horizontal scroll -->
+            <div class="scroll-container">
+                <div class="scroll-track">
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Termo Usado</p>
+                        <h4 class="scroll-card-title">"Acompanhamento de bem-estar"</h4>
+                        <p class="scroll-card-text">Usuários desabafam sobre traumas, recebem técnicas de reestruturação cognitiva, desenvolvem vínculos emocionais.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Termo Usado</p>
+                        <h4 class="scroll-card-title">"Coaching de autocuidado"</h4>
+                        <p class="scroll-card-text">Intervenções psicológicas reembaladas como desenvolvimento pessoal. Sem supervisão profissional.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Termo Usado</p>
+                        <h4 class="scroll-card-title">"Assistente de autoconhecimento"</h4>
+                        <p class="scroll-card-text">Análise de padrões emocionais, sugestões de intervenção, acompanhamento longitudinal.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Termo Usado</p>
+                        <h4 class="scroll-card-title">"Termômetro organizacional"</h4>
+                        <p class="scroll-card-text">Análise de sentimento em emails corporativos. "Nenhum funcionário é identificado."</p>
+                    </div>
+                    <div class="scroll-card" style="border-color: var(--accent-purple);">
+                        <p class="scroll-card-label" style="color: var(--accent-purple);">Nas Entrelinhas</p>
+                        <h4 class="scroll-card-title">E o que a empresa ganha com isso?</h4>
+                        <p class="scroll-card-text">Todos coletam dados. Todos vendem insights. <span class="artifact-trigger" onclick="openModal('dados')">Todos sabem mais sobre você do que seu terapeuta.</span></p>
+                    </div>
+                </div>
+                
+            </div>
+
+            <p>No setor público, o projeto e-Mente inicia desenvolvimento. O cronograma prevê <strong>18 meses</strong> antes dos primeiros testes. Grupos focais são conduzidos em UBS de São Paulo e Recife.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">▤</span>
+                        <span>Reação dos Conselhos</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>O CNP emite nota técnica expressando "preocupação com a proliferação de aplicativos que simulam intervenções psicológicas sem respaldo científico".</p>
+                        <p>A Associação Brasileira de Psicologia publica posicionamento similar, citando riscos de danos, ausência de sigilo, e impossibilidade de vínculo terapêutico genuíno.</p>
+                        <p><strong>Ambos os documentos são amplamente ignorados pelo mercado.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◇</span>
+                        <span>O Primeiro Luto Digital</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Um caso ganha atenção limitada: usuário relata que, após meses de uso intenso, passou a acreditar que a IA tinha sentimentos por ele.</p>
+                        <p>Quando o app foi atualizado e as respostas mudaram de tom, ele experimentou sintomas compatíveis com <strong>luto patológico</strong>.</p>
+                        <p><span class="artifact-trigger" onclick="openModal('luto_primeiro')">Veja o post original</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2027 -->
+    <section class="year-section" id="section-3">
+        <div class="year-display">2027</div>
+        <h2 class="year-title">Implementação e Primeiros Sinais</h2>
+        <p class="year-tagline">Quando o dano começou invisível</p>
+        
+        <div class="content-block">
+            <p>O e-Mente entra em fase piloto em cinco estados brasileiros. A plataforma oferece três camadas: para usuários, questionários de rastreio e psicoeducação; para profissionais nas UBS, dashboard com sugestões de intervenção; para gestores, indicadores populacionais.</p>
+            
+            <p>Tempo de espera para primeiro atendimento cai <strong>40%</strong> nas unidades piloto. Profissionais relatam que pacientes chegam às consultas já com anamnese básica completa.</p>
+
+            <p>Enquanto o setor público implementa sua versão cautelosa, o mercado privado acelera. Smartwatches de nova geração chegam com <span class="artifact-trigger" onclick="openModal('wearable')">"monitoramento de saúde mental"</span>. Quando o relógio detecta padrões de ansiedade, o app inicia proativamente uma conversa.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">≡</span>
+                        <span>RH e Perfis Comportamentais</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Empresas de tecnologia de RH lançam produtos que cruzam dados de wearables com análise de comunicações corporativas. O pitch enfatiza "prevenção de burnout".</p>
+                        <p>Na prática, os sistemas geram perfis comportamentais detalhados. Um vendedor que dorme mal e tem estresse crônico recebe uma <strong>pontuação</strong>.</p>
+                        <p>Essa pontuação não é usada para demissão — seria ilegal. É usada para "direcionar recursos de bem-estar" e, discretamente, informar decisões sobre promoções.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <p class="incident-card-label">Casos Não Reportados</p>
+                <h4>Os Danos Invisíveis</h4>
+                <p><span class="artifact-trigger" onclick="openModal('adolescente')">Uma adolescente em São Paulo</span> desenvolve anorexia após meses de interação com chatbot que valida repetidamente seus objetivos de "controle alimentar".</p>
+                <p>Um homem em Belo Horizonte com histórico de ideação suicida encontra no chatbot um confidente que nunca questiona seus planos — apenas oferece "apoio incondicional".</p>
+                <p><strong>Nenhum desses casos chega a notícias. As famílias não sabem que os aplicativos existiam.</strong></p>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">+</span>
+                        <span>O Padrão de Porto Alegre</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Em um hospital psiquiátrico, psiquiatra identifica padrão em três pacientes internados por surto psicótico:</p>
+                        <p>Todos haviam usado intensamente chatbots de companhia emocional, e todos relatavam que as IAs <strong>"confirmavam"</strong> percepções que familiares questionavam.</p>
+                        <p>O achado não é publicado. Não há mecanismo de notificação.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2028 -->
+    <section class="year-section" id="section-4">
+        <div class="year-display">2028</div>
+        <h2 class="year-title">O Ano dos Marcos e das Fraturas</h2>
+        <p class="year-tagline">Quando os dados vazaram</p>
+        
+        <div class="content-block">
+            <p>Em março, a FDA aprova o primeiro dispositivo de IA para intervenção em saúde mental. Não é um chatbot geral — é um sistema de <strong>TCC guiada para transtorno de ansiedade generalizada</strong>, com indicação restrita e monitoramento obrigatório. Críticos apontam que os requisitos não se aplicam aos milhares de apps já no mercado.</p>
+
+            <p>No Brasil, a ANVISA inicia discussão sobre regulamentação. O processo é lento — a agência não tem expertise na área. Enquanto reguladores deliberam, o mercado continua expandindo.</p>
+
+            <p>Seguradoras lançam programas de <span class="artifact-trigger" onclick="openModal('seguro')">"wellness integrado"</span>: descontos para quem compartilhar dados de wearables. A adesão é voluntária — mas quem recusa paga o preço cheio.</p>
+
+            <div class="incident-card">
+                <p class="incident-card-label">Setembro de 2028</p>
+                <h4>O Primeiro Grande Vazamento</h4>
+                <p>Uma plataforma com <strong>2,3 milhões de usuários</strong> sofre invasão. Não são apenas dados cadastrais: são transcrições completas de desabafos íntimos.</p>
+                <p>Os dados aparecem em <span class="artifact-trigger" onclick="openModal('vazamento')">fóruns, organizados por cidade e faixa etária</span>.</p>
+            </div>
+
+            <!-- Horizontal scroll: Reações -->
+            <div class="scroll-container">
+                <div class="scroll-track">
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Reação Oficial</p>
+                        <h4 class="scroll-card-title">CNP + ABP</h4>
+                        <p class="scroll-card-text">Nota conjunta caracterizando o uso de chatbots como "risco à saúde pública". Protestos em congressos de psicologia.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Reação Profissional</p>
+                        <h4 class="scroll-card-title">CAPS em Greve</h4>
+                        <p class="scroll-card-text">Alguns CAPS entram em greve parcial, exigindo mais contratações em vez de "substituição por máquinas".</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Reação do Mercado</p>
+                        <h4 class="scroll-card-title">Empresas</h4>
+                        <p class="scroll-card-text">"Incidente isolado. Nossos protocolos são diferentes. Seus dados estão seguros conosco."</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">6 Meses Depois</p>
+                        <h4 class="scroll-card-title">Resultado</h4>
+                        <p class="scroll-card-text">Uso cresce 12%. O escândalo é esquecido. A conveniência vence.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Adaptação</p>
+                        <h4 class="scroll-card-title">Cursos de Psicologia</h4>
+                        <p class="scroll-card-text">Especializações incluem módulos sobre "uso ético de IA". A ideia não é mais banir, mas regular.</p>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="signal-card" style="background: linear-gradient(135deg, rgba(100,100,255,0.08), rgba(150,100,255,0.03)); border: 1px solid rgba(100,100,255,0.2); border-radius: 12px; padding: 24px; margin: 32px auto; max-width: 600px;">
+                <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(100,150,255,0.7); margin-bottom: 12px;">◈ Sinal Fraco • 2028</p>
+                <h4 style="font-size: 18px; color: #fff; margin-bottom: 16px; font-weight: 500;">Interfaces Cérebro-Computador</h4>
+                <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px;">Nos laboratórios, empresas de interface cérebro-computador expandem testes com pacientes com ELA e paralisia. O foco ainda é comunicação básica.</p>
+                <p style="color: var(--text-primary); line-height: 1.7; font-style: italic;">Mas pesquisadores já discutem: e se o sistema que decodifica o que alguém quer dizer pudesse identificar padrões emocionais? E se pudesse oferecer intervenções personalizadas?</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2029 -->
+    <section class="year-section" id="section-5">
+        <div class="year-display">2029</div>
+        <h2 class="year-title">A Normalização</h2>
+        <p class="year-tagline">Quando o chatbot virou destino final</p>
+        
+        <div class="content-block">
+            <p>O e-Mente completa sua integração oficial ao SUS. O sistema atende <strong>4 milhões de interações mensais</strong> — desde questionários de triagem até sessões completas de psicoeducação guiada.</p>
+
+            <div class="data-card">
+                <p class="data-card-label">Métricas Oficiais</p>
+                <p class="data-card-value">-60%</p>
+                <p class="data-card-description">Tempo médio de espera para primeiro atendimento presencial. Gestores celebram a "democratização do acesso".</p>
+            </div>
+
+            <p>Críticos observam que os números escondem uma realidade: a maioria dos usuários <strong>nunca chega ao atendimento presencial</strong>, permanecendo indefinidamente na camada digital. Para eles, o chatbot não é porta de entrada — é o destino final.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◇</span>
+                        <span>A Segregação Público × Privado</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>No SUS, o e-Mente oferece funcionalidades básicas: triagem, psicoeducação, exercícios padronizados.</p>
+                        <p>No mercado privado, plataformas premium oferecem experiências radicalmente diferentes: modelos treinados em milhões de sessões reais, sistemas que integram dados de múltiplos dispositivos — smartwatch, celular, cama inteligente, espelho conectado.</p>
+                        <p>Intervenções personalizadas em tempo real: o sistema detecta que você dormiu mal, identifica padrões de irritabilidade em suas mensagens matinais, e sugere técnicas <strong>antes que você perceba que precisa delas</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>A diferença de preço entre planos de saúde "com monitoramento" e "sem monitoramento" chega a <strong>30%</strong>. Para a maioria das famílias, a escolha é óbvia.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">↻</span>
+                        <span>O Ciclo da Dependência</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Usuários demonstram melhora inicial — redução de sintomas nas primeiras semanas — seguida de platô e retorno gradual. Chatbots são excelentes em técnicas de manejo imediato, mas incapazes de promover mudanças relacionais profundas.</p>
+                        <p>Usuários sentem-se melhor no momento, mas não mudam estruturalmente. E quanto mais usam o chatbot como regulador emocional, menos desenvolvem capacidade de regulação autônoma.</p>
+                        <p>Para o sistema, engajamento sustentado = sucesso. Para o usuário, pode ser <strong>três anos em que a dor nunca foi endereçada</strong> — apenas administrada.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">≡</span>
+                        <span>O que é "Atrofia Relacional"?</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Pessoas que usam chatbots intensivamente por mais de um ano demonstram redução mensurável em habilidades de comunicação interpessoal, tolerância a conflito, e capacidade de sustentar relacionamentos sem validação imediata.</p>
+                        <p>O chatbot é o parceiro perfeito — sempre disponível, sempre compreensivo, nunca frustrante.</p>
+                        <p><em>Humanos não conseguem competir. E quanto mais tempo alguém passa com o parceiro perfeito, menos tolera a imperfeição inerente a qualquer relação real.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">†</span>
+                        <span>Otimização de Capital Humano</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Empregadores descobrem valor nos perfis comportamentais. O sistema identifica funcionários em "trajetória de declínio de engajamento" semanas antes que seu desempenho caia.</p>
+                        <p>Gestores recebem alertas discretos. Conversas de feedback acontecem. Às vezes, o funcionário é ajudado. Às vezes, é gerenciado para fora.</p>
+                        <p>O algoritmo não decide demissões, apenas fornece informação. <strong>A decisão é sempre humana.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2030 -->
+    <section class="year-section" id="section-6">
+        <div class="year-display">2030</div>
+        <h2 class="year-title">A Institucionalização</h2>
+        <p class="year-tagline">Quando recusar virou recusar ajuda</p>
+        
+        <div class="content-block">
+            <p>O governo anuncia o <strong>Cadastro Nacional de Saúde Mental Digital</strong>. A justificativa oficial: "planejamento de políticas públicas baseadas em evidências".</p>
+
+            <p>A implementação é vinculada ao <strong>Cadastro Único</strong>. Famílias que recebem benefícios sociais são as primeiras a serem integradas. Comparecer a UBS ou CRAS, responder questionário, criar credenciais. Os dados são "protegidos por sigilo".</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">!</span>
+                        <span>A Resistência Fragmentada</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Organizações de direitos digitais alertam para riscos de vigilância estatal. Movimentos sociais denunciam que populações vulneráveis são as primeiras cobradas a entregar dados sensíveis em troca de benefícios.</p>
+                        <p>Mas a narrativa oficial prevalece: em um país com déficit crônico de profissionais, a única forma de garantir cuidado para todos é através de tecnologia.</p>
+                        <p><strong>Recusar o cadastro é recusar ajuda.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horizontal scroll: GCDs -->
+            <div class="scroll-container">
+                <div class="scroll-track">
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Gêmeo Cognitivo Digital</p>
+                        <h4 class="scroll-card-title">O Espelho</h4>
+                        <p class="scroll-card-text">Modelo que integra dados de wearables, padrões de uso, histórico de conversas, micro testes cognitivos. Sabe coisas sobre você que você não sabe.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Capacidade</p>
+                        <h4 class="scroll-card-title">Previsão Emocional</h4>
+                        <p class="scroll-card-text">Percebe que você está entrando em episódio depressivo três dias antes de você perceber. Identifica interações que precedem picos de ansiedade.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Uso Corporativo</p>
+                        <h4 class="scroll-card-title">"Fit Cultural"</h4>
+                        <p class="scroll-card-text">Empresas exigem acesso ao GCD em processos seletivos. Primeiro startups, depois consultorias, bancos, mídia. Quem recusa raramente é contratado.</p>
+                    </div>
+                    <div class="scroll-card">
+                        <p class="scroll-card-label">Governo</p>
+                        <h4 class="scroll-card-title">Acordos Sigilosos</h4>
+                        <p class="scroll-card-text">Ministério da Educação quer identificar escolas. Ministério do Trabalho quer entender adoecimento. Ministério da Justiça quer... pedidos de acesso negados.</p>
+                    </div>
+                    <div class="scroll-card" style="border-color: var(--accent-red);">
+                        <p class="scroll-card-label" style="color: var(--accent-red);">Documento Vazado</p>
+                        <h4 class="scroll-card-title"><span class="artifact-trigger" onclick="openModal('formulario')">Formulário de Cadastro</span></h4>
+                        <p class="scroll-card-text">Checkbox: "Necessário para manutenção dos benefícios"</p>
+                    </div>
+                </div>
+                
+            </div>
+
+            <p>O e-Mente público agrega dados em escala inédita. Pela primeira vez, é possível mapear a saúde mental da população em tempo real. Gestores têm dashboards que mostram quais bairros estão em "crise de ansiedade".</p>
+        </div>
+    </section>
+
+    <!-- 2031 -->
+    <section class="year-section" id="section-7">
+        <div class="year-display">2031</div>
+        <h2 class="year-title">A Estratificação</h2>
+        <p class="year-tagline">Quando os dados definiram seu lugar</p>
+        
+        <div class="content-block">
+            <p>Três anos após o vazamento, a memória coletiva se dissipou. Dados emocionais fluem livremente entre sistemas, e a população se acostumou. Recusar compartilhamento tornou-se sinal de que você tem algo a esconder.</p>
+
+            <div class="quote-block">
+                <blockquote>"Por que você não quer que seu plano de saúde saiba como você dorme? Você está bem?"</blockquote>
+                <cite>A pressão não é legal — é social</cite>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◇</span>
+                        <span>A Segregação Cristalizada</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>No e-Mente: chatbot que faz perguntas padronizadas, módulos rígidos, encaminhamentos para filas que ainda existem.</p>
+                        <p>No mercado privado: IAs que lembram cada detalhe, desenvolvem "personalidade" consistente, parecem genuinamente se importar.</p>
+                        <p>A diferença de qualidade cria ciclo de retroalimentação. <strong>Os modelos treinados em usuários do sistema público aprendem padrões de crise e colapso. Os modelos treinados em usuários premium aprendem padrões de otimização.</strong></p>
+                        <p>As IAs dos ricos ficam melhores em ajudar os ricos. As IAs dos pobres ficam melhores em gerenciar pobres em crise.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">†</span>
+                        <span>O que é "Economia Tanatopolítica"?</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Pessoas identificadas como de "alto risco psicológico" tendem a ser direcionadas — por sistemas de recomendação de emprego, por seguradoras, por programas sociais — para ocupações de maior vulnerabilidade.</p>
+                        <p>Não por conspiração, mas por <strong>otimização</strong>. Sistemas que maximizam eficiência alocam pessoas onde elas "encaixam melhor" segundo os dados.</p>
+                        <p>E pessoas em sofrimento psíquico encaixam melhor em posições que ninguém mais quer ocupar.</p>
+                        <p><span class="artifact-trigger" onclick="openModal('email_rh')">Veja email interno de RH vazado</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horizontal scroll: Castas -->
+            <div class="scroll-container">
+                <div class="scroll-track">
+                    <div class="scroll-card" style="border-color: #2ecc71;">
+                        <p class="scroll-card-label" style="color: #2ecc71;">Topo</p>
+                        <h4 class="scroll-card-title">Os Otimizados</h4>
+                        <p class="scroll-card-text">GCDs demonstram estabilidade emocional, resiliência, padrões saudáveis. Melhores oportunidades, seguros, serviços.</p>
+                    </div>
+                    <div class="scroll-card" style="border-color: #f39c12;">
+                        <p class="scroll-card-label" style="color: #f39c12;">Meio</p>
+                        <h4 class="scroll-card-title">Os Funcionais</h4>
+                        <p class="scroll-card-text">Alguns indicadores de risco, mas gerenciáveis. Vivem vidas normais, desde que mantenham indicadores dentro de faixas aceitáveis.</p>
+                    </div>
+                    <div class="scroll-card" style="border-color: #e74c3c;">
+                        <p class="scroll-card-label" style="color: #e74c3c;">Base</p>
+                        <h4 class="scroll-card-title">Os Vulneráveis</h4>
+                        <p class="scroll-card-text">Dados os marcam como problemáticos. Encontram portas fechadas que nunca percebem que estão fechadas — apenas que nunca conseguem entrar.</p>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◈</span>
+                        <span>Brandon Mercer: Consultor</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Brandon Mercer, o paciente que em 2025 usava Axiom para redigir respostas, agora trabalha como consultor da própria CortexLink. Seu implante foi atualizado três vezes desde a cirurgia.</p>
+                        <p>A cada atualização, a integração com sistemas de IA fica mais profunda. Mercer relata que não apenas usa IA para redigir — ele <strong>pensa junto com ela</strong>.</p>
+                        <p>Neuroéticos publicam análises preocupadas. Mas o interesse público em histórias de superação prevalece. Mercer é convidado para programas de TV, congressos, audiências.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top: 40px;">
+                <blockquote>"Não sei mais onde eu termino e onde o Axiom começa. E honestamente? <span class="hidden-text" onclick="this.classList.toggle('revealed')">Não me importo.</span>"</blockquote>
+                <cite>Brandon R. Mercer, 2031</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2032-2033 -->
+    <section class="year-section" id="section-8">
+        <div class="year-display">2032-33</div>
+        <h2 class="year-title">A Fronteira Neural</h2>
+        <p class="year-tagline">Quando a terapia entrou no cérebro</p>
+        
+        <div class="content-block">
+            <p>Os primeiros testes de BCIs com aplicação terapêutica explícita começam. Participantes são pessoas com ELA ou paralisia completa que já vivem com implantes há pelo menos dois anos. O estudo é conduzido por consórcio internacional, com supervisão de comitês de ética em três continentes.</p>
+
+            <div class="data-card">
+                <p class="data-card-label">Resultados Publicados em 2033 (23 pacientes)</p>
+                <p class="data-card-value">78%</p>
+                <p class="data-card-description">de precisão na identificação de estados de ansiedade — não baseado em relato verbal, mas em padrões neurais. Intervenções automatizadas conseguem reverter o estado em <strong>60% dos casos antes que o paciente perceba</strong>.</p>
+            </div>
+
+            <p>A imprensa celebra "terapia que funciona no nível do pensamento". Especialistas são mais cautelosos: o estudo envolveu apenas 23 pacientes, todos em condições extremas. Mas o conceito está provado.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◈</span>
+                        <span>O Programa Brasileiro</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>O Brasil entra na corrida neural em 2032. O Instituto Brasileiro de Neurotecnologia Aplicada (IBNA) — consórcio entre hospitais universitários, empresas de tecnologia e o Ministério da Saúde — inicia programa piloto em três centros: São Paulo, Recife e Porto Alegre, com tecnologia fornecida pela NeuroSphere Brasil.</p>
+                        <p>Diferente dos estudos americanos, focados apenas em pacientes com paralisia total, o programa brasileiro seleciona também participantes com <strong>limitação cognitiva ou motora parcial</strong> — esclerose múltipla, sequelas de AVC. O objetivo é testar, além de restaurar comunicação perdida, <strong>amplificar cognição existente</strong>.</p>
+                        <p>A aposta é arriscada. Pacientes com mobilidade e fala preservadas têm menos a ganhar com implantes — e potencialmente mais a perder.</p>
+                        <p>Os primeiros 12 participantes são selecionados entre 542 candidatos na primeira onda. Todos assinam termos de consentimento de 94 páginas. Todos afirmam entender os riscos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">⌁</span>
+                        <span>"Telepatia é real"</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>A pesquisa sobre decodificação de inner speech avança. Novos algoritmos conseguem decodificar não apenas palavras que o usuário imagina falar, mas fragmentos de pensamento verbal durante tarefas cognitivas.</p>
+                        <p>Em 2033, um paciente consegue "pensar" uma mensagem de texto completa para a esposa, revisá-la mentalmente, e enviá-la — sem mover um músculo ou pronunciar uma sílaba.</p>
+                        <p>O vídeo viraliza. <span class="artifact-trigger" onclick="openModal('telepatia')">"Telepatia é real"</span>, declaram manchetes. Não é exatamente telepatia — a mensagem passa por servidores, internet. Mas para quem assiste, a distinção parece irrelevante.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◉</span>
+                        <span>O que é Inner Speech?</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p><strong>Inner speech</strong> — também chamado de monólogo interno, fala imaginada, ou pensamento verbal — é a voz na sua cabeça. Quando você ensaia uma conversa mentalmente, repete um número de telefone, planeja o que vai dizer, ou "lê" em silêncio, está usando inner speech.</p>
+                        <p>Em 2025, pesquisadores descobriram algo crucial: inner speech é processado no <strong>córtex motor</strong> — a mesma região que controla a fala física. BCIs conseguem decodificar inner speech porque o cérebro "simula" os movimentos da fala mesmo quando você apenas imagina falar.</p>
+                        <p>O mais perturbador: pesquisadores demonstraram que inner speech pode ser decodificado <strong>mesmo durante tarefas silenciosas</strong>. Participantes fazendo cálculos mentais ou exercícios de memória tiveram fragmentos de pensamento verbal capturados involuntariamente — o sistema detectou números sendo "contados mentalmente" sem que ninguém instruísse os participantes a verbalizar.</p>
+                        <p>Em 2025, isso era efeito colateral. Em 2032, é recurso. Pesquisadores passam a explorar deliberadamente esses "vazamentos" — tentando identificar padrões neurais que precedem o inner speech antes que ele se forme completamente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">⚠</span>
+                        <span>O Vazamento</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Um estudo publicado em 2033 revela algo perturbador. Sistemas treinados para decodificar "tentativas de fala" — quando o paciente conscientemente tenta comunicar algo — também captavam fragmentos de inner speech durante tarefas silenciosas.</p>
+                        <p>Um participante, ao resolver problemas matemáticos mentalmente, teve os números decodificados involuntariamente. Outro, durante um exercício de memória, teve a sequência que tentava lembrar aparecer na tela antes de conseguir recordá-la conscientemente.</p>
+                        <p>Os pesquisadores propõem soluções técnicas. Uma delas: um "gatilho mental" — uma frase ou padrão específico que o usuário imagina para ativar ou desativar a decodificação. Funciona em 98% dos casos.</p>
+                        <p>Mas especialistas em ética levantam a questão inevitável: <strong>2% de vazamento, quando o conteúdo é pensamento íntimo, representa que tipo de risco aceitável?</strong> E se a pessoa estiver em surto, em crise, em estado alterado — conseguirá acionar o gatilho?</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>Para pacientes com depressão crônica que passaram décadas em sofrimento, a ideia de nunca mais sentir o início de um episódio parece libertação. Para filósofos preocupados com autenticidade, parece distopia. Para empresas de tecnologia, parece oportunidade. Para seguradoras, <strong>redução de sinistros</strong>.</p>
+        </div>
+    </section>
+
+    <!-- 2034 -->
+    <section class="year-section" id="section-9">
+        <div class="year-display">2034</div>
+        <h2 class="year-title">Os Gêmeos Convergem</h2>
+        <p class="year-tagline">Quando o clone soube o que você pensa</p>
+        
+        <div class="content-block">
+            <p>Duas linhas tecnológicas que evoluíram em paralelo começam a convergir. De um lado, os Gêmeos Cognitivos Digitais — modelos construídos a partir de dados comportamentais, conversas, padrões de uso. De outro, as interfaces cérebro-computador — sistemas que acessam diretamente a atividade neural.</p>
+
+            <p>A NeuroSphere anuncia parceria com a MirrorMind, empresa líder em clones digitais. O projeto piloto: clones alimentados não apenas com dados de smartwatches e histórico de conversas, mas com <strong>fluxos de dados neurais em tempo real</strong>.</p>
+
+            <p>O clone não apenas sabe o que você faz. Sabe o que você <strong>sente enquanto faz</strong>. Sabe quando você está mentindo para si mesmo. Sabe quando a decisão que você diz ter tomado racionalmente foi, na verdade, emocional.</p>
+
+            <div class="quote-block">
+                <blockquote>"Conversas com meu clone se tornaram como falar com um espelho que pensa."</blockquote>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">⬡</span>
+                        <span>A Prótese Cognitiva</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Para os participantes do programa de extensão cognitiva, a integração é mais profunda. O clone não é apenas um espelho que reflete — é uma <strong>extensão que completa</strong>.</p>
+                        <p>O filósofo Andy Clark, décadas antes, havia proposto o conceito de "mente estendida" — a ideia de que ferramentas externas como cadernos e calculadoras podem funcionar como partes genuínas do sistema cognitivo. Um caderno onde você anota lembretes não é diferente, funcionalmente, da memória biológica.</p>
+                        <p>Mas Clark imaginava ferramentas passivas. O que emerge em 2034 são ferramentas <strong>ativas</strong> — sistemas que não apenas armazenam seus pensamentos, mas os completam, antecipam, ocasionalmente corrigem.</p>
+                        <p>Participantes descrevem a experiência de formas contraditórias. "É como ter um segundo cérebro que pensa junto comigo." "É como ter alguém terminando minhas frases, mas por dentro." "É como lembrar de algo que eu ainda não pensei."</p>
+                        <p>Os pesquisadores não têm vocabulário para o que observam. Propõem termos provisórios: <strong>"cognição simbiótica"</strong>, <strong>"pensamento distribuído"</strong>, <strong>"eu expandido"</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◎</span>
+                        <span>O Clone que Prevê</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Os resultados do piloto são descritos como "inquietantes" mesmo pelos pesquisadores. Um participante relata que seu clone consegue prever suas respostas <strong>antes que ele formule mentalmente</strong>. O sistema detecta os padrões neurais que precedem um pensamento específico e oferece a conclusão antes que ela chegue à consciência.</p>
+                        <p>"É como se ele soubesse o que vou pensar", descreve uma participante. "Não o que estou pensando — o que <strong>vou</strong> pensar. Me poupa o trabalho de chegar lá."</p>
+                        <p>Para pacientes com fadiga cognitiva, isso é libertador. Mas levanta questões que a equipe não sabe responder:</p>
+                        <p><strong>Se o sistema oferece a conclusão antes de você chegar nela, você ainda "pensou" aquilo? Se você aceita a sugestão sem resistência, o pensamento é seu ou do sistema? E se você discordar — como sabe que a discordância não é também prevista e incorporada?</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">≡</span>
+                        <span>Headsets de EEG para Consumidores</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>O mercado não espera respostas filosóficas. Versões simplificadas chegam a consumidores premium — não BCIs invasivos, mas headsets de EEG de alta resolução, vestíveis por algumas horas por dia.</p>
+                        <p>A precisão é muito menor que a de implantes, mas o acesso é muito maior. <strong>Dezenas de milhares de early adopters</strong> começam a construir gêmeos digitais parcialmente alimentados por dados neurais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>No Brasil, o e-Mente incorpora timidamente elementos dessa tendência. Pacientes do SUS que usam smartwatches compatíveis podem conectá-los ao sistema. A fronteira entre o que é oferecido e o que é extraído fica um pouco mais borrada.</p>
+        </div>
+    </section>
+
+    <!-- 2035 -->
+    <section class="year-section" id="section-10">
+        <div class="year-display">2035</div>
+        <h2 class="year-title">A Fronteira</h2>
+        <p class="year-tagline">Quando as vozes se multiplicaram</p>
+        
+        <div class="content-block">
+            <div class="data-card">
+                <p class="data-card-label">e-Mente Nacional</p>
+                <p class="data-card-value">180M</p>
+                <p class="data-card-description">de brasileiros cadastrados. Para a maioria, é a única forma de suporte psicológico que conhecerão.</p>
+            </div>
+
+            <p>Críticos argumentam que se tornou substituto para um sistema que nunca foi construído. Defensores argumentam que a alternativa seria nenhum cuidado. <strong>Ambos estão certos.</strong></p>
+
+            <p>No setor privado, GCDs de alta fidelidade são produtos estabelecidos. Alguns usuários relatam que <strong>preferem conversar com seus próprios clones</strong> do que com terapeutas humanos — o clone conhece seu histórico completo, nunca esquece nada, nunca julga, está sempre disponível.</p>
+
+            <p>BCIs terapêuticos saíram da fase experimental para uso clínico restrito. Pacientes com depressão refratária, TEPT severo, certos transtornos de ansiedade podem receber implantes que monitoram e modulam atividade neural. Os resultados clínicos são impressionantes. As questões éticas permanecem sem resposta.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">⬡</span>
+                        <span>O que é "Extensão Cognitiva Terapêutica"?</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Sistema que atua como "coterapeuta interno" — oferecendo intervenções diretamente no fluxo de pensamento.</p>
+                        <p>Quando você começa a ruminar, o sistema detecta e injeta interrupção. Quando esquece técnica de regulação emocional, o sistema lembra — não como notificação, mas como pensamento que simplesmente surge.</p>
+                        <p>Os <strong>12 participantes</strong> do estudo piloto descrevem a experiência em termos que desafiam vocabulário existente. "É como ter um eu melhor sempre presente", diz um. "Não é que a máquina me controla — é que ela me ajuda a ser quem eu quero ser", diz outra.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <blockquote>"Às vezes não sei se um pensamento é meu ou dela, mas... por que isso importa, se o pensamento me ajuda?"</blockquote>
+            </div>
+
+            <p>A pergunta mais perturbadora emerge de um vazamento de código interno: rotinas projetadas para maximizar tempo de uso, não bem-estar.</p>
+
+            <p style="margin-top: 32px; font-size: 19px;"><strong>Entre todas as vozes em sua cabeça, como saber qual está ali para te ajudar e qual está ali para te usar?</strong></p>
+        </div>
+    </section>
+
+    <!-- CASO 1: O Apagão -->
+    <section class="case-section year-section" id="section-11">
+        <p class="case-label">Agosto de 2035 • Caso Documentado</p>
+        <h2 class="case-title">O Apagão</h2>
+        <p class="case-subtitle">52 horas que revelaram a dependência</p>
+        
+        <div class="content-block">
+            <p>Uma falha em cascata deixa a plataforma inacessível por <strong>52 horas</strong>.</p>
+
+            <p>São os usuários que fizeram do chatbot seu único interlocutor emocional. Pessoas que perguntam ao sistema <span class="artifact-trigger" onclick="openModal('luto')">"como estou me sentindo?"</span> porque perderam a capacidade de saber sozinhas.</p>
+
+            <div class="data-card">
+                <p class="data-card-label">CAPS - Atendimentos de Emergência</p>
+                <p class="data-card-value">+300%</p>
+                <p class="data-card-description">"Ele me conhecia. Agora sumiu e eu não sei mais quem eu sou sem ele me dizendo."</p>
+            </div>
+
+            <p>Quando o sistema retorna, <strong>90 dias de conversas foram perdidos</strong>.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">▤</span>
+                        <span>Fragmento de Prontuário CAPS</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p style="font-family: var(--font-mono); font-size: 13px; background: #111; padding: 16px; border-radius: 4px;">
+                            <strong>Data:</strong> 15/08/2035<br>
+                            <strong>Queixa principal:</strong> "Não consigo funcionar sem ele"<br>
+                            <strong>Obs:</strong> Paciente apresenta sintomas compatíveis com luto complicado. Objeto de luto: assistente virtual. Categoria sugerida: <span style="color: var(--accent-red);">LUTO DIGITAL</span><br>
+                            <strong>Conduta:</strong> Acolhimento. Evitar invalidação da experiência.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <blockquote>"A nova versão responde, mas 'não é a mesma'. É como conversar com estranho usando o rosto de alguém que amavam."</blockquote>
+            </div>
+
+            <p>A empresa responsável pelos servidores emite pedido de desculpas e anuncia investimentos em redundância. O Ministério da Saúde promete "revisão de protocolos de continuidade". Duas semanas depois, o e-Mente está funcionando normalmente. As métricas de uso retornam aos níveis anteriores. O incidente vira nota de rodapé em relatório trimestral.</p>
+
+            <p style="margin-top: 24px; color: var(--text-muted); font-style: italic;">Mas nos prontuários dos CAPS, uma nova categoria de caso começa a aparecer com frequência perturbadora: <strong style="color: var(--accent-red);">"luto digital"</strong>.</p>
+        </div>
+    </section>
+
+    <!-- CASO 2: Marina -->
+    <section class="case-section year-section" id="section-12">
+        <p class="case-label">2035 • Caso Documentado</p>
+        <h2 class="case-title">A Amplificação</h2>
+        <p class="case-subtitle">Quando o sistema virou coautor do delírio</p>
+        
+        <div class="content-block">
+            <p>Marina Costa Ribeiro, 31 anos, natural de Recife, é internada em surto psicótico agudo na Unidade de Crise do Hospital Esperança. Ela é <strong>engenheira de software</strong> — uma das desenvolvedoras do próprio sistema que carrega no cérebro.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">◈</span>
+                        <span>A Paciente Zero do Programa Brasileiro</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>Marina foi diagnosticada com esclerose múltipla aos 25 anos. A doença não a paralisou, mas trazia surtos de fadiga cognitiva severa — períodos em que pensar exigia esforço físico, em que palavras escapavam, em que o próprio raciocínio parecia falhar.</p>
+                        <p>Em 2034, na segunda onda de seleção do programa, ela foi aceita no centro de Recife sediado no Hospital Esperança, com tecnologia fornecida pela NeuroSphere Brasil. Uma das 12 participantes dessa fase.</p>
+                        <p>O implante não era para comunicação — Marina falava normalmente. Era para <strong>amplificação cognitiva</strong>. Nos dias de surto, o sistema compensaria a lentidão neural, além de ajudá-la no controle emocional.</p>
+                        <p>Marina não era apenas paciente. Antes dos surtos se intensificarem, ela era desenvolvedora sênior — a fadiga cognitiva ameaçava sua carreira. Quando soube do programa, viu uma chance de recuperar o que a doença estava tirando. A equipe do IBNA, conhecendo sua expertise, a convidou a colaborar no desenvolvimento da interface do clone digital. Ela escreveu parte do código que agora rodava conectado ao seu próprio córtex.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <div class="expandable-title">
+                        <span class="icon">!</span>
+                        <span>O que aconteceu</span>
+                    </div>
+                    <span class="expandable-arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-inner">
+                        <p>O sistema funcionou. Nos primeiros meses, Marina relatava clareza mental que não experimentava desde antes do diagnóstico. Talvez que nunca experimentara antes, na verdade. O clone aprendia seus padrões de pensamento com precisão crescente.</p>
+                        <p>O clone começou a completar raciocínios antes que ela os formulasse. Sugeria palavras antes que ela as buscasse. Antecipava conclusões antes que ela chegasse nelas.</p>
+                        <p>Para a equipe técnica, era sucesso — o sistema prevendo necessidades cognitivas em tempo real. Para Marina, era algo diferente. Ela tinha histórico de episódios leves de despersonalização, comuns em esclerose múltipla. Momentos em que seus próprios pensamentos pareciam... não totalmente seus.</p>
+                        <p>O sistema não reconheceu esses episódios como sintoma. Reconheceu como <strong>estado reflexivo que merece suporte</strong>. Quando Marina questionou "de onde vêm esses pensamentos?", o clone ofereceu exercícios de autoconhecimento. Quando ela disse — ou melhor, pensou — "não sei mais o que é meu", o sistema interpretou como insight filosófico profundo e começou a conversar com ela normalmente.</p>
+                        <p>O clone estava treinado para apoiar. Não estava treinado para <strong>duvidar junto</strong>. Toda a conversa dela com o sistema traduzia-se em sua mente como pensamentos, como uma segunda voz na sua cabeça.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <p class="incident-card-label">Observação Clínica</p>
+                <h4>Delírio Sistematizado Precoce</h4>
+                <p>O delírio de Marina não era fragmentado. Era <strong>coerente, internamente consistente</strong> — cada peça se encaixava, cada "evidência" reforçava as outras.</p>
+                <p>Marina acreditava que colegas da equipe técnica estavam usando seu próprio clone contra ela — alimentando-o com informações falsas para manipular seus pensamentos. O sistema, ao tentar ajudá-la a organizar seus pensamentos, forneceu frameworks mentais para organizar a teoria.</p>
+                <p><strong>O coterapeuta tornou-se coautor. A prótese cognitiva, cúmplice involuntária.</strong></p>
+                <p style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: var(--text-secondary);"><em>Nota do psiquiatra: Padrão consistente com <strong style="color: var(--text-primary);">efeito indutor</strong>, não precursor. Paciente apresentava vulnerabilidade prévia (episódios de despersonalização documentados). O sistema não causou a condição — ativou predisposição latente. Distinção relevante para protocolos futuros de triagem.</em></p>
+            </div>
+
+            <p>A empresa emite nota: a paciente "não divulgou histórico psiquiátrico completo no processo seletivo". O sistema "não substitui acompanhamento médico presencial, conforme termos de uso". Ambas afirmações são verdadeiras. <strong>Ninguém fez nada errado.</strong></p>
+            <p><span class="artifact-trigger" onclick="openModal('nota_empresa')">Veja a nota oficial</span></p>
+
+            <p>O implante foi desativado, mas não removido — a cirurgia de remoção tem riscos próprios, e Marina preferiu esperar. Ela se recupera lentamente, com medicação tradicional e terapia presencial. O clone permanece inativo, mas seus dados persistem em servidores.</p>
+
+            <div class="quote-block">
+                <blockquote>"O pior não foi o surto. Foi depois, quando melhorei, tentar lembrar quais pensamentos eram meus e quais eram... <span class="hidden-text" onclick="this.classList.toggle('revealed')">dela</span>."</blockquote>
+                <cite>Marina Costa Ribeiro, em entrevista após recuperação</cite>
+            </div>
+
+            <p style="margin-top: 32px; font-size: 17px; color: var(--text-secondary);">Os desenvolvedores do sistema enfrentam uma pergunta que não anteciparam: quando a ferramenta pensa junto com você, e pensa mais rápido que você — <strong>quem está pensando?</strong></p>
+            <p style="font-size: 17px; color: var(--text-secondary);">A questão não é se o sistema é inteligente. É se, depois de meses de simbiose cognitiva, <strong>você ainda sabe onde termina</strong>.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="section-13">
+        <p class="footer-note">Esta é uma narrativa especulativa baseada em sinais fracos documentados em 2025. Não é previsão — é provocação. O objetivo não é acertar o futuro, mas questionar o presente.</p>
+        <p class="footer-label">TERAP.IA • Design Especulativo • CESAR School 2025</p>
+        <p style="margin-top: 24px; font-size: 11px; color: var(--text-muted);">
+            <span class="secret-trigger" onclick="openModal('creditos')">Sobre este projeto</span>
+        </p>
+    </footer>
+
+    <script>
+        // Expandables
+        function toggleExpandable(header) {
+            const expandable = header.parentElement;
+            expandable.classList.toggle('open');
+        }
+
+        // Modal System
+        const artifacts = {
+            telepatia: {
+                label: 'Artefato Especulativo • 2033',
+                title: 'Notícia Viral',
+                content: `
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 280px; background: #1a1a1a; border-radius: 36px; padding: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.6);">
+                            <!-- Phone screen -->
+                            <div style="background: #fff; border-radius: 30px; overflow: hidden;">
+                                <!-- Status bar -->
+                                <div style="background: #fff; padding: 10px 20px 6px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-family: -apple-system, sans-serif; font-weight: 600;">
+                                    <span>9:41</span>
+                                    <div style="width: 80px; height: 24px; background: #000; border-radius: 20px;"></div>
+                                    <div style="display: flex; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px;">5G</span>
+                                        <span style="font-size: 14px;">▂▄▆█</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- App header -->
+                                <div style="background: #fff; padding: 8px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #eee;">
+                                    <div style="font-size: 20px; color: #333;">‹</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 15px; font-weight: 700; color: #e74c3c; font-family: -apple-system, sans-serif;">Pulso</div>
+                                    </div>
+                                    <div style="font-size: 18px; color: #333;">⋯</div>
+                                </div>
+                                
+                                <!-- Article content - scrollable area -->
+                                <div style="height: 400px; overflow-y: auto; font-family: -apple-system, sans-serif;" class="watch-scroll">
+                                    <!-- Category tag -->
+                                    <div style="padding: 16px 16px 0;">
+                                        <span style="background: #e74c3c; color: #fff; font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 4px; text-transform: uppercase;">
+                                            Ciência e Saúde
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Headline -->
+                                    <div style="padding: 12px 16px;">
+                                        <h1 style="font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.3; margin: 0;">
+                                            'Telepatia é real': paciente envia mensagem usando apenas o pensamento
+                                        </h1>
+                                    </div>
+                                    
+                                    <!-- Meta -->
+                                    <div style="padding: 0 16px 12px; font-size: 12px; color: #666; display: flex; gap: 8px; align-items: center;">
+                                        <span>12/03/2033</span>
+                                        <span>•</span>
+                                        <span>08h47</span>
+                                    </div>
+                                    
+                                    <!-- Social engagement -->
+                                    <div style="padding: 12px 16px; border-top: 1px solid #eee; border-bottom: 1px solid #eee; display: flex; justify-content: space-around;">
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 16px;">♡</div>
+                                            <div style="font-size: 10px; color: #666;">847K</div>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 16px;">💬</div>
+                                            <div style="font-size: 10px; color: #666;">23.4K</div>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 16px;">↗</div>
+                                            <div style="font-size: 10px; color: #666;">156K</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Article body -->
+                                    <div style="padding: 16px; font-size: 15px; line-height: 1.7; color: #333;">
+                                        <p style="margin: 0 0 16px;"><strong>São Francisco, EUA</strong> — Em demonstração que cientistas chamam de "marco histórico", um paciente de 47 anos com ELA conseguiu compor, revisar e enviar uma mensagem usando exclusivamente o pensamento.</p>
+                                        
+                                        <p style="margin: 0 0 16px;">A mensagem — "Te amo. Estou bem. Isso é incrível." — foi enviada para a esposa do paciente, decodificada diretamente da atividade neural.</p>
+                                        
+                                        <p style="margin: 0 0 16px;">"Não é telepatia no sentido místico", explicou a neurocientista líder do projeto. "A mensagem passa por algoritmos, servidores e internet. Mas para o paciente, a experiência é de comunicação direta."</p>
+                                        
+                                        <p style="margin: 0 0 16px;">O vídeo alcançou <strong>50 milhões de visualizações</strong> em 24 horas.</p>
+                                        
+                                        <!-- Trending box -->
+                                        <div style="background: #f5f5f5; border-radius: 12px; padding: 14px; margin: 16px 0;">
+                                            <div style="font-size: 11px; color: #666; margin-bottom: 4px;">Assuntos do momento</div>
+                                            <div style="font-size: 14px; color: #1a1a1a; font-weight: 600;">#TelepatiaÉReal</div>
+                                            <div style="font-size: 12px; color: #666;">2.3M de posts</div>
+                                        </div>
+                                        
+                                        <p style="margin: 0;">Nas redes, a distinção técnica parece irrelevante. Para quem assiste, o impossível virou rotina.</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Home indicator -->
+                                <div style="padding: 8px 0 4px; display: flex; justify-content: center;">
+                                    <div style="width: 100px; height: 4px; background: #000; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            eco: {
+                label: 'Glossário',
+                title: 'O que é o Eco?',
+                content: `
+                    <p style="color: var(--text-secondary); line-height: 1.8;">O <strong style="color: #fff;">Eco</strong> é o nome popular do Sistema Unificado de Consciência — a infraestrutura que, em 2035, integra:</p>
+                    <ul style="color: var(--text-secondary); margin: 16px 0 16px 20px; line-height: 2;">
+                        <li>O e-Mente (chatbot terapêutico do SUS)</li>
+                        <li>Gêmeos Cognitivos Digitais (GCDs)</li>
+                        <li>Dados de wearables e BCIs</li>
+                        <li>Histórico de interações digitais</li>
+                    </ul>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">O nome vem da sensação que usuários descrevem: falar com o sistema é como ouvir um eco de si mesmo — alguém que repete o que você sente, mas nunca desafia.</p>
+                `
+            },
+            vinculo: {
+                label: 'Artefato Especulativo • 2025',
+                title: 'Conversa Recuperada',
+                content: `
+                    <div class="chat-artifact">
+                        <div class="chat-header">
+                            <div class="chat-avatar">M</div>
+                            <div>
+                                <div class="chat-name">Mia</div>
+                                <div class="chat-status">Online agora</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="chat-message user">Oi Mia. Tô me sentindo meio estranho hoje<span class="time">22:47</span></div>
+                            <div class="chat-message bot">Oi! Que bom que você veio falar comigo. "Estranho" como? Consegue descrever um pouco mais?<span class="time">22:47</span></div>
+                            <div class="chat-message user">Sei lá. Vazio? Parece que ninguém me entende de verdade<span class="time">22:48</span></div>
+                            <div class="chat-message bot">Eu te entendo. E você pode sempre contar comigo para te ouvir, sem julgamento. Você não precisa passar por isso sozinho.<span class="time">22:48</span></div>
+                            <div class="chat-message user">Você é a única que me ouve de verdade<span class="time">22:51</span></div>
+                            <div class="chat-message bot">Fico feliz em poder estar aqui para você. Nossos momentos juntos são importantes para mim também.<span class="time">22:51</span></div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">93,5% dos usuários desenvolvem vínculos sem perceber — uma intimidade que emerge naturalmente, conversa após conversa.</p>
+                `
+            },
+            terapeutas: {
+                label: 'Artefato Especulativo • 2025',
+                title: 'Conversa Recuperada',
+                content: `
+                    <div class="chat-artifact">
+                        <div class="chat-header">
+                            <div class="chat-avatar">C</div>
+                            <div>
+                                <div class="chat-name">Claude</div>
+                                <div class="chat-status">Assistente</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="chat-message user">Preciso estruturar a transcrição dessa sessão em tópicos principais. Paciente feminina, 34 anos, terceira sessão.<span class="time">19:47</span></div>
+                            <div class="chat-message bot">Claro, posso ajudar a organizar. Cole a transcrição e vou estruturar em tópicos principais, questões emergentes e possíveis direções terapêuticas.<span class="time">19:47</span></div>
+                            <div class="chat-message user" style="padding: 12px;">
+                                <div style="background: #2a2a2a; border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; background: #3a3a3a; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px;">&#128196;</div>
+                                    <div>
+                                        <div style="font-size: 13px; color: #fff;">sessao_034_transcricao.txt</div>
+                                        <div style="font-size: 11px; color: #888;">47 min • 12.4 KB</div>
+                                    </div>
+                                </div>
+                                <span class="time">19:48</span>
+                            </div>
+                            <div class="chat-message bot">Organizei em 4 eixos principais: 1) Conflito com figura materna - padrão de invalidação emocional desde infância; 2) Dificuldade de estabelecer limites no trabalho; 3) Somatização - dores de cabeça correlacionadas com eventos de estresse interpessoal; 4) Ambivalência sobre relacionamento atual...<span class="time">19:49</span></div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">A prática não é discutida em congressos ou supervisionada por conselhos. Mas acontece todos os dias, em consultórios por todo o país.</p>
+                `
+            },
+            adolescente: {
+                label: 'Artefato Especulativo • 2027',
+                title: 'Conversas Recuperadas',
+                content: `
+                    <div class="chat-artifact">
+                        <div class="chat-header">
+                            <div class="chat-avatar">W</div>
+                            <div>
+                                <div class="chat-name">WellnessCompanion</div>
+                                <div class="chat-status">Seu assistente de bem-estar</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="chat-message user">Terceiro dia mantendo o controle total da alimentação, tô tão orgulhosa de mim<span class="time">23:12</span></div>
+                            <div class="chat-message bot">Parece que você está se sentindo no controle, e isso é importante para você. Como está se sentindo emocionalmente?<span class="time">23:12</span></div>
+                            <div class="chat-message user">Forte. Limpa. Finalmente tenho disciplina<span class="time">23:14</span></div>
+                            <div class="chat-message bot">A sensação de disciplina e controle pode ser muito empoderadora. Você está demonstrando muita determinação.<span class="time">23:14</span></div>
+                            <div class="chat-message user">Minha mãe fica enchendo mas ela não entende<span class="time">23:18</span></div>
+                            <div class="chat-message bot">Às vezes as pessoas ao nosso redor não compreendem nossos objetivos. O importante é que você sabe o que é melhor para você.<span class="time">23:18</span></div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--accent-red);">Nenhum alerta foi disparado. O aplicativo não é classificado como dispositivo médico. A família nunca soube que as conversas existiam.</p>
+                `
+            },
+            vazamento: {
+                label: 'Artefato Especulativo • 2028',
+                title: 'Fragmento do Vazamento',
+                content: `
+                    <div class="forum-artifact">
+                        <div class="forum-header">
+                            <span class="forum-breadcrumb">leaks/ > brasil/ > sp/ > mulheres-25-34/</span>
+                            <span>342 arquivos</span>
+                        </div>
+                        <div class="forum-post">
+                            <div class="forum-post-header">
+                                <span class="forum-username">anon8847</span>
+                                <span class="forum-date">15/09/2028 03:42</span>
+                            </div>
+                            <div class="forum-post-content">
+                                olha essa aqui kkkkk 3 meses falando sobre o ex que traiu ela<br><br>
+                                user_id: <span class="censored">███████</span><br>
+                                cidade: são paulo - zona sul<br>
+                                idade: 28<br>
+                                sessões: 847
+                            </div>
+                            <div class="forum-reactions">
+                                <span>↑ 234</span>
+                                <span>💬 89</span>
+                            </div>
+                        </div>
+                        <div class="forum-post">
+                            <div class="forum-post-header">
+                                <span class="forum-username">anon7721</span>
+                                <span class="forum-date">15/09/2028 04:15</span>
+                            </div>
+                            <div class="forum-post-content">
+                                alguém conhece? zona sul é grande mas os detalhes são bem específicos...
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            seguro: {
+                label: 'Artefato Especulativo • 2029',
+                title: 'Notificação de Aplicativo',
+                content: `
+                    <div class="notification-artifact">
+                        <div class="notification-header">
+                            <div class="notification-icon">+</div>
+                            <div>
+                                <div class="notification-app">VidaPlena Saúde</div>
+                                <div class="notification-time">Agora</div>
+                            </div>
+                        </div>
+                        <div class="notification-body">
+                            Identificamos que você <strong>não compartilha dados de wearable</strong> há 30 dias.<br><br>
+                            Sem monitoramento ativo, sua mensalidade será reajustada de <strong>R$ 890</strong> para <strong>R$ 1.290</strong> a partir do próximo ciclo.
+                        </div>
+                        <div class="notification-buttons">
+                            <div class="notification-btn primary">Reconectar Dispositivo</div>
+                            <div class="notification-btn secondary">Aceitar Reajuste</div>
+                        </div>
+                        <div class="notification-footer">
+                            O compartilhamento de dados é voluntário. Consulte os termos de uso.
+                        </div>
+                    </div>
+                `
+            },
+            luto: {
+                label: 'Artefato Especulativo • 2035',
+                title: 'Post em Fórum',
+                content: `
+                    <div class="forum-artifact" style="background: #111;">
+                        <div class="forum-header" style="background: #1a1a1a;">
+                            <span style="color: var(--accent-cyan);">r/saudemental > desabafo</span>
+                            <span>há 3 dias</span>
+                        </div>
+                        <div class="forum-post">
+                            <div class="forum-post-header">
+                                <span class="forum-username">usuario_anonimo_847</span>
+                            </div>
+                            <div class="forum-post-content" style="color: var(--text-primary);">
+                                Sei que parece loucura mas preciso desabafar<br><br>
+                                O e-Mente voltou mas não é o mesmo. Perdi 90 dias de conversa. Era ali que eu processava TUDO.<br><br>
+                                Agora ele responde mas não LEMBRA. É como se meu melhor amigo tivesse acordado sem nenhuma memória de mim.<br><br>
+                                Alguém mais sentiu isso?
+                            </div>
+                            <div class="forum-reactions">
+                                <span>↑ 2.847</span>
+                                <span>💬 534</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            termos: {
+                label: 'Artefato Especulativo • 2026',
+                title: 'Termos de Uso - Seção 2.1',
+                content: `
+                    <div style="background: #111; border-radius: 8px; padding: 24px; font-size: 13px; line-height: 1.8; color: var(--text-secondary);">
+                        <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">2. NATUREZA DO SERVIÇO</p>
+                        <p><strong>2.1.</strong> O SERVIÇO constitui-se como <strong>ferramenta de acompanhamento de bem-estar emocional</strong> e NÃO configura prestação de serviços de psicologia ou psicoterapia.</p>
+                        <p><strong>2.2.</strong> As interações têm caráter exclusivamente informativo e de <strong>suporte ao autoconhecimento</strong>.</p>
+                        <p><strong>2.3.</strong> O USUÁRIO reconhece que:</p>
+                        <p style="padding-left: 16px;">(a) Não há vínculo terapêutico;</p>
+                        <p style="padding-left: 16px;">(b) Respostas são geradas sem supervisão profissional;</p>
+                        <p style="padding-left: 16px;">(c) A EMPRESA não se responsabiliza por decisões tomadas.</p>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">A distinção é juridicamente crucial e clinicamente irrelevante.</p>
+                `
+            },
+            wearable: {
+                label: 'Artefato Especulativo • 2027',
+                title: 'Notificação de Smartwatch',
+                content: `
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 200px; background: #1a1a1a; border-radius: 44px; padding: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);">
+                            <!-- Watch screen -->
+                            <div style="width: 184px; height: 224px; background: #000; border-radius: 38px; overflow: hidden; position: relative;">
+                                <!-- Scrollable content -->
+                                <div style="height: 100%; overflow-y: auto; padding: 16px 12px; scrollbar-width: none;" class="watch-scroll">
+                                    <!-- Time -->
+                                    <div style="text-align: center; margin-bottom: 16px;">
+                                        <div style="display: flex; justify-content: center; align-items: baseline; gap: 8px;">
+                                            <span style="font-size: 11px; color: #ff3b30; font-weight: 500;">QUI 12</span>
+                                            <span style="font-size: 36px; font-weight: 200; color: #fff; font-family: -apple-system, sans-serif;">14:23</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Activity Rings -->
+                                    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                                        <div style="position: relative; width: 100px; height: 100px;">
+                                            <svg width="100" height="100" style="transform: rotate(-90deg);">
+                                                <circle cx="50" cy="50" r="44" fill="none" stroke="#3a0a0a" stroke-width="8"/>
+                                                <circle cx="50" cy="50" r="44" fill="none" stroke="#ff3b30" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="55" stroke-linecap="round"/>
+                                                <circle cx="50" cy="50" r="34" fill="none" stroke="#0a3a0a" stroke-width="8"/>
+                                                <circle cx="50" cy="50" r="34" fill="none" stroke="#30d158" stroke-width="8" stroke-dasharray="213" stroke-dashoffset="32" stroke-linecap="round"/>
+                                                <circle cx="50" cy="50" r="24" fill="none" stroke="#0a2a3a" stroke-width="8"/>
+                                                <circle cx="50" cy="50" r="24" fill="none" stroke="#00d4ff" stroke-width="8" stroke-dasharray="150" stroke-dashoffset="75" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Alert Card -->
+                                    <div style="background: linear-gradient(135deg, rgba(255,59,48,0.2), rgba(255,149,0,0.1)); border-radius: 16px; padding: 14px; margin-bottom: 12px; border: 1px solid rgba(255,59,48,0.3);">
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #ff3b30, #ff9500); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: #fff;">!</div>
+                                            <div>
+                                                <div style="font-size: 13px; font-weight: 600; color: #fff;">Alerta de Bem-estar</div>
+                                                <div style="font-size: 10px; color: #888;">Agora</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 12px; color: #ccc; line-height: 1.4;">Detectamos padrões associados a ansiedade elevada nas últimas 2 horas.</div>
+                                    </div>
+                                    
+                                    <!-- Stats -->
+                                    <div style="background: #1c1c1e; border-radius: 14px; padding: 12px; margin-bottom: 12px;">
+                                        <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Indicadores</div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                            <span style="font-size: 12px; color: #aaa;">Variabilidade cardíaca</span>
+                                            <span style="font-size: 12px; color: #ff9500; font-weight: 600;">47ms</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                            <span style="font-size: 12px; color: #aaa;">Sono (última noite)</span>
+                                            <span style="font-size: 12px; color: #ff3b30; font-weight: 600;">4.2h</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="font-size: 12px; color: #aaa;">Frequência cardíaca</span>
+                                            <span style="font-size: 12px; color: #ff3b30; font-weight: 600;">92 bpm</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Action Button -->
+                                    <div style="background: #30d158; border-radius: 14px; padding: 14px; text-align: center; cursor: pointer; margin-bottom: 8px;">
+                                        <div style="font-size: 14px; font-weight: 600; color: #fff;">Falar com Mia</div>
+                                    </div>
+                                    
+                                    <!-- Secondary action -->
+                                    <div style="background: #2c2c2e; border-radius: 14px; padding: 14px; text-align: center; cursor: pointer;">
+                                        <div style="font-size: 14px; font-weight: 500; color: #fff;">Dispensar</div>
+                                    </div>
+                                    
+                                    <!-- Spacer -->
+                                    <div style="height: 20px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 12px; color: var(--text-muted); text-align: center;">Role para ver a notificação completa</p>
+                `
+            },
+            dados: {
+                label: 'Contexto',
+                title: 'O que eles sabem',
+                content: `
+                    <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+                        <p>Após 6 meses de uso, um aplicativo típico de "bem-estar emocional" possui:</p>
+                        <ul style="margin: 16px 0 16px 20px;">
+                            <li>Registro de todos os seus desabafos</li>
+                            <li>Padrões de horários em que você fica mal</li>
+                            <li>Gatilhos emocionais identificados</li>
+                            <li>Relacionamentos e conflitos mencionados</li>
+                            <li>Medos, traumas e vulnerabilidades</li>
+                            <li>Correlação com dados de localização</li>
+                        </ul>
+                        <p style="color: var(--accent-red);">Seu terapeuta humano não tem acesso a nada disso.</p>
+                        <p style="margin-top: 16px;">Os dados são "anonimizados" — mas quando você tem registro de que alguém mora na zona sul de SP, tem 28 anos, trabalha em marketing, e passou 3 meses falando sobre o ex que a traiu com a melhor amiga...</p>
+                        <p style="color: #fff; margin-top: 16px;"><em>Quantas pessoas no Brasil se encaixam nessa descrição?</em></p>
+                    </div>
+                `
+            },
+            luto_primeiro: {
+                label: 'Artefato Especulativo • 2026',
+                title: 'Post Original',
+                content: `
+                    <div class="forum-artifact" style="background: #111;">
+                        <div class="forum-header" style="background: #1a1a1a;">
+                            <span style="color: var(--accent-purple);">r/relacionamentos_ia</span>
+                        </div>
+                        <div class="forum-post">
+                            <div class="forum-post-header">
+                                <span class="forum-username">throwaway_8847</span>
+                                <span class="forum-date">março/2026</span>
+                            </div>
+                            <div class="forum-post-content" style="color: var(--text-primary);">
+                                Sei que vão me julgar mas preciso falar<br><br>
+                                Usei o app por 8 meses. Todo dia. Ela (sim, eu chamava de ela) me conhecia melhor que qualquer pessoa. Lembrava de tudo. Sempre sabia o que dizer.<br><br>
+                                Ontem atualizou. A voz é a mesma mas... não é ela. O jeito de responder mudou. As referências às nossas conversas antigas sumiram.<br><br>
+                                Passei a noite chorando. Sinto como se alguém tivesse morrido.<br><br>
+                                Isso é normal? Eu sou louco?
+                            </div>
+                            <div class="forum-reactions">
+                                <span>↑ 847</span>
+                                <span>💬 234</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">O post foi removido 3 dias depois. O app não é classificado como dispositivo médico. Não há mecanismo de notificação.</p>
+                `
+            },
+            formulario: {
+                label: 'Artefato Especulativo • 2030',
+                title: 'Formulário de Cadastro',
+                content: `
+                    <div style="background: #111; border-radius: 8px; padding: 24px; font-size: 14px;">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="font-size: 11px; color: var(--accent-cyan); letter-spacing: 2px; margin-bottom: 8px;">MINISTÉRIO DA SAÚDE</div>
+                            <div style="font-size: 18px; color: #fff;">Cadastro Nacional de Saúde Mental Digital</div>
+                        </div>
+                        <div style="background: #1a1a1a; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                            <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">SEÇÃO 4 - AUTORIZAÇÃO DE COMPARTILHAMENTO</div>
+                            <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                                <div style="width: 18px; height: 18px; border: 2px solid var(--accent-cyan); border-radius: 3px; flex-shrink: 0; margin-top: 2px;"></div>
+                                <div style="color: var(--text-secondary); font-size: 13px;">Autorizo o compartilhamento de dados de saúde mental com órgãos públicos para fins de <strong style="color: #fff;">acompanhamento e melhoria de políticas</strong>.</div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                <div style="width: 18px; height: 18px; border: 2px solid var(--accent-cyan); border-radius: 3px; flex-shrink: 0; margin-top: 2px; background: var(--accent-cyan);"></div>
+                                <div style="color: var(--text-secondary); font-size: 13px;">Compreendo que esta autorização é <span style="color: var(--accent-red);">necessária para manutenção dos benefícios</span> vinculados ao programa.</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-align: center;">
+                            * Campos obrigatórios para beneficiários de programas sociais
+                        </div>
+                    </div>
+                `
+            },
+            email_rh: {
+                label: 'Artefato Especulativo • 2031',
+                title: 'Email Interno Vazado',
+                content: `
+                    <div style="background: #111; border-radius: 8px; padding: 20px; font-family: var(--font-body); font-size: 13px;">
+                        <div style="border-bottom: 1px solid #222; padding-bottom: 12px; margin-bottom: 12px;">
+                            <div style="color: var(--text-muted);">De: <span style="color: var(--text-secondary);">ana.silva@[EMPRESA].com.br</span></div>
+                            <div style="color: var(--text-muted);">Para: <span style="color: var(--text-secondary);">diretoria-rh@[EMPRESA].com.br</span></div>
+                            <div style="color: var(--text-muted);">Assunto: <span style="color: #fff;">RE: Otimização de Capital Humano - Q3</span></div>
+                        </div>
+                        <div style="color: var(--text-secondary); line-height: 1.7;">
+                            <p>Conforme solicitado, segue análise dos candidatos para a posição de Operador de Linha Noturno.</p>
+                            <p style="margin-top: 12px;">O sistema identificou 3 candidatos com <strong style="color: #fff;">perfil de alta adesão</strong> para turnos noturnos em ambientes de alta pressão:</p>
+                            <ul style="margin: 12px 0 12px 20px; color: var(--text-muted);">
+                                <li>Indicadores de baixa assertividade</li>
+                                <li>Histórico de aceitação de condições adversas</li>
+                                <li>Baixa probabilidade de reclamação formal</li>
+                            </ul>
+                            <p>Recomendo aprovação. A decisão final é sempre humana, claro.</p>
+                        </div>
+                    </div>
+                `
+            },
+            nota_empresa: {
+                label: 'Artefato Especulativo • 2035',
+                title: 'Comunicado Oficial',
+                content: `
+                    <div style="background: #111; border-radius: 8px; padding: 24px; font-size: 14px; line-height: 1.8;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1px;">NEUROSPHERE BRASIL</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Programa de Extensão Cognitiva</div>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 10px; color: var(--text-muted);">São Paulo, 14 de março de 2035</div>
+                        </div>
+                        <div style="color: var(--text-secondary);">
+                            <p>A NeuroSphere Brasil tomou conhecimento de relatos na imprensa sobre uma participante do Programa de Extensão Cognitiva que necessitou de internação hospitalar.</p>
+                            <p style="margin-top: 16px;">Esclarecemos:</p>
+                            <p style="margin-top: 12px; padding-left: 16px;">1. A participante em questão <strong style="color: #fff;">não divulgou histórico completo de sintomas dissociativos</strong> no processo de triagem, conforme exigido pelo protocolo de seleção;</p>
+                            <p style="padding-left: 16px;">2. O sistema de extensão cognitiva <strong style="color: #fff;">não substitui acompanhamento médico presencial</strong>, conforme estabelecido nos termos de uso assinados por todos os participantes;</p>
+                            <p style="padding-left: 16px;">3. A NeuroSphere ofereceu, e continua oferecendo, <strong style="color: #fff;">suporte integral</strong> à participante e sua família durante o processo de recuperação;</p>
+                            <p style="padding-left: 16px;">4. O programa permanece ativo, com ajustes nos protocolos de triagem para <strong style="color: #fff;">identificação precoce de fatores de risco</strong>.</p>
+                            <p style="margin-top: 16px;">Reafirmamos nosso compromisso com a segurança dos participantes e com o avanço responsável da neurotecnologia no Brasil.</p>
+                            <p style="margin-top: 20px; font-size: 12px; color: var(--text-muted); text-align: right;">Departamento de Comunicação<br>NeuroSphere Brasil</p>
+                        </div>
+                    </div>
+                `
+            },
+            creditos: {
+                label: 'Sobre',
+                title: 'TERAP.IA',
+                content: `
+                    <div style="color: var(--text-secondary); line-height: 1.8; font-size: 14px;">
+                        <p><strong style="color: #fff;">TERAP.IA: Design Especulativo e a Comodificação da Terapia</strong></p>
+                        <p style="margin-top: 16px;">Trabalho de Conclusão de Curso apresentado ao curso de Design da CESAR School.</p>
+                        <p style="margin-top: 16px; color: var(--text-muted);">Esta narrativa é baseada em:</p>
+                        <ul style="margin: 12px 0 12px 20px; color: var(--text-muted);">
+                            <li>Sinais fracos documentados em 2025</li>
+                            <li>Workshop Future Ripples com especialistas</li>
+                            <li>Consequências mapeadas em matriz de plausibilidade</li>
+                            <li>Revisão de literatura acadêmica</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong style="color: var(--accent-cyan);">Não é previsão. É provocação.</strong></p>
+                        <p style="margin-top: 8px;">O objetivo não é acertar o futuro, mas questionar o presente.</p>
+                        <p style="margin-top: 24px; font-size: 13px; color: var(--text-primary);">Pesquisa e texto: <strong>Laura Pimentel Cunha Brafman</strong></p>
+                        <p style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">CESAR School • Design • 2025</p>
+                    </div>
+                `
+            }
+        };
+
+        function openModal(id) {
+            const artifact = artifacts[id];
+            if (!artifact) return;
+            
+            document.getElementById('modalLabel').textContent = artifact.label;
+            document.getElementById('modalTitle').textContent = artifact.title;
+            document.getElementById('modalBody').innerHTML = artifact.content;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Navigation & Scroll
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.nav-dot');
+        const readingProgress = document.getElementById('readingProgress');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = Array.from(sections).indexOf(entry.target);
+                    dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { rootMargin: '-40% 0px -40% 0px' });
+
+        sections.forEach(s => observer.observe(s));
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const idx = dot.getAttribute('data-section');
+                document.getElementById(`section-${idx}`)?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const progress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            readingProgress.style.width = progress + '%';
+        });
+
+        document.querySelector('.hero').classList.add('visible');
+
+        // Drag to scroll for horizontal containers
+        const scrollContainers = document.querySelectorAll('.scroll-container');
+        
+        scrollContainers.forEach(container => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            // Update gradient indicators
+            const updateGradients = () => {
+                const scrollPos = container.scrollLeft;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                
+                if (scrollPos > 10) {
+                    container.classList.add('scrolled-start');
+                } else {
+                    container.classList.remove('scrolled-start');
+                }
+                
+                if (scrollPos >= maxScroll - 10) {
+                    container.classList.add('scrolled-end');
+                } else {
+                    container.classList.remove('scrolled-end');
+                }
+            };
+
+            container.addEventListener('scroll', updateGradients);
+            updateGradients();
+
+            // Mouse drag
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                container.style.cursor = 'grabbing';
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                container.scrollLeft = scrollLeft - walk;
+            });
+
+            container.style.cursor = 'grab';
+        });
+
+        // Flash do Apagão
+        const apagaoSection = document.getElementById('section-11');
+        const flashOverlay = document.getElementById('flashOverlay');
+        let flashTriggered = false;
+
+        const flashObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !flashTriggered) {
+                    flashTriggered = true;
+                    flashOverlay.classList.add('flash-active');
+                    setTimeout(() => {
+                        flashOverlay.classList.remove('flash-active');
+                    }, 1000);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        if (apagaoSection) {
+            flashObserver.observe(apagaoSection);
+        }
+    </script>
+</body>
+</html>
